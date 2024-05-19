@@ -3,7 +3,7 @@ import shutil
 import os
 import random
 from PIL import Image
-from pdf2image import convert_from_bytes
+from pdf2image import convert_from_bytes,convert_from_path
 import io
 import base64
 import streamlit as st
