@@ -11,10 +11,7 @@ import streamlit as st
 from englisttohindi.englisttohindi import EngtoHindi
 from googletrans import Translator
 from textblob import TextBlob
-translator = Translator(service_urls=[
-      'translate.google.com',
-      'translate.google.co.kr',
-    ])
+translator = Translator()
 def apply_spell_check(extracted_text):
     try:
         text = TextBlob(extracted_text)
