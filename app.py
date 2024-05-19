@@ -71,7 +71,9 @@ if file is not None and key and butt:
         st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
         img = Image.open(BytesIO(img_bytes))
         txt=pytesseract.image_to_string(img)
-        tx+="\n ----- \n"+txt+"\n ----- \n"
+        llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")  
+        result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
+        tx+="\n ----- \n"+result+"\n ----- \n"
          
           # res=translator.translate(str(txt),dest='hi')
           # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
@@ -84,10 +86,9 @@ if "extracted_txt" in st.session_state and key:
   tx=st.session_state.extracted_txt  
   b=st.button("Download in txt format")
   if b:
-    llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")  
-    result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {tx} \n ``` \n in Hindi without changing its meaning")
+    
     # download_link = create_download_link(tx, "output.txt")
-    lnk2= create_download_link(result, "output_gemini.txt") 
+    lnk2= create_download_link(tx, "output_gemini.txt") 
     
     st.markdown(lnk2, unsafe_allow_html=True)  
           
