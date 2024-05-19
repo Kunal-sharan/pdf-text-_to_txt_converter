@@ -8,9 +8,12 @@ import io
 from io import BytesIO
 import base64
 import streamlit as st
+from englisttohindi.englisttohindi import EngtoHindi
 from googletrans import Translator
+from textblob import TextBlob
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAI
-# translator = Translator()
+translator = Translator()
 
 new_txt=""
 # result = llm.invoke("Write a ballad about LangChain")
@@ -43,41 +46,37 @@ original_txt=""
 if file is not None and key:
     # Convert the PDF to images
     #pdf-->bytes-->images
-    llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")
+    llm = GoogleGenerativeAI(model="models/text-bison-001", google_api_key=f"{key}")
+    pop_path = r'poppler-24.02.0/Library/bin'
     images = convert_from_bytes(file.read())
 
     # Display the images
-    with st.spinner("Processing..."):
-        for i, image in enumerate(images):
-            # Convert the PIL image to a format that Streamlit can display
-            img_bytes = BytesIO()
-    
-    
-            image.save(img_bytes, format='JPEG',quality=70)
-            img_bytes = img_bytes.getvalue()
-            st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
-            if i>0:
-                img = Image.open(io.BytesIO(img_bytes))
-                txt=pytesseract.image_to_string(img)
-                tx+="\n ----- \n"+txt+"\n ----- \n"
-                st.success(f"Extracted from page {i+1}")
-            # if i>0:
-            #     original_txt+=tx  
-              # res=translator.translate(str(txt),dest='hi')
-              # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
-              # t=apply_spell_check(txt)
-              # r=translator.translate(str(t),dest='hi')
-              # st.write(len(t))
-              # st.write(r)
-        if tx:
-          b=st.button("Download in txt format")
-          if b:
-            result=llm.invoke(f"Translate this text ```\n {tx} \n ``` \n in Hindi without changing its meaning")
-            # download_link = create_download_link(tx, "output.txt")
-            lnk2= create_download_link(str(result), "output_gemini.txt") 
-            # st.markdown(download_link, unsafe_allow_html=True)
-            # st.write(original_txt)  
-            st.markdown(lnk2, unsafe_allow_html=True)  
-              
+    for i, image in enumerate(images):
+        # Convert the PIL image to a format that Streamlit can display
+        img_bytes = BytesIO()
 
 
+        image.save(img_bytes, format='PNG')
+        img_bytes = img_bytes.getvalue()
+        st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
+        img = Image.open(BytesIO(img_bytes))
+        txt=pytesseract.image_to_string(img)
+        tx+="\n ----- \n"+txt+"\n ----- \n"
+        if i>0:
+          original_txt+=txt  
+          # res=translator.translate(str(txt),dest='hi')
+          # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
+          # t=apply_spell_check(txt)
+          # r=translator.translate(str(t),dest='hi')
+          # st.write(len(t))
+          # st.write(r)
+    if tx:
+      b=st.button("Download in txt format")
+      if b:
+        result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {original_txt} \n ``` \n in Hindi without changing its meaning")
+        new_txt=result.content
+        # download_link = create_download_link(tx, "output.txt")
+        lnk2= create_download_link(new_txt, "output_gemini.txt") 
+        
+        st.markdown(lnk2, unsafe_allow_html=True)  
+          
