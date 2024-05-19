@@ -39,13 +39,14 @@ def create_download_link(text, filename):
 
 file = st.file_uploader("Choose a PDF file", type="pdf")
 key=st.text_input("Enter the key")
-if key:
-   llm = ChatGoogleGenerativeAI(model="gemini-pro",api_key=f"{key}")
+
 tx=""
 original_txt=""
 if file is not None:
     # Convert the PDF to images
     #pdf-->bytes-->images
+    if key:
+       llm = ChatGoogleGenerativeAI(model="gemini-pro",api_key=f"{key}")
     pop_path = r'poppler-24.02.0/Library/bin'
     images = convert_from_bytes(file.read())
 
