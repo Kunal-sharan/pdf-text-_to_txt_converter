@@ -38,7 +38,7 @@ if file is not None:
     # Convert the PDF to images
     #pdf-->bytes-->images
     pop_path = r'poppler-24.02.0/Library/bin'
-    images = convert_from_bytes(file.read(),poppler_path=pop_path)
+    images = convert_from_path(file,poppler_path=pop_path)
 
     # Display the images
     for i, image in enumerate(images):
