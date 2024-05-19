@@ -62,8 +62,8 @@ if file is not None and key:
         img = Image.open(io.BytesIO(img_bytes))
         txt=pytesseract.image_to_string(img)
         tx+="\n ----- \n"+txt+"\n ----- \n"
-        
-        original_txt+=tx  
+        if i>0:
+            original_txt+=tx  
           # res=translator.translate(str(txt),dest='hi')
           # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
           # t=apply_spell_check(txt)
