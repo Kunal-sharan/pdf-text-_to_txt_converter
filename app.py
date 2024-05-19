@@ -47,7 +47,7 @@ if file is not None and key:
     images = convert_from_bytes(file.read())
 
     # Display the images
-    with st.spinner(Processing...):
+    with st.spinner("Processing..."):
         for i, image in enumerate(images):
             # Convert the PIL image to a format that Streamlit can display
             img_bytes = BytesIO()
