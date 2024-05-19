@@ -40,7 +40,10 @@ def create_download_link(text, filename):
 
 file = st.file_uploader("Choose a PDF file", type="pdf")
 key=st.text_input("Enter the key")
-
+st.write("First clear cache before using for faster result")
+butto=st.button("Clear Cache")
+if butto:
+    st.cache_data.clear()
 tx=""
 original_txt=""
 if file is not None and key:
