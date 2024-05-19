@@ -63,7 +63,7 @@ if file is not None and key:
         txt=pytesseract.image_to_string(img)
         tx+="\n ----- \n"+txt+"\n ----- \n"
         if i>0:
-          original_txt+=txt  
+          original_txt+=tx  
           # res=translator.translate(str(txt),dest='hi')
           # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
           # t=apply_spell_check(txt)
