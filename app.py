@@ -12,6 +12,7 @@ from englisttohindi.englisttohindi import EngtoHindi
 from googletrans import Translator
 from textblob import TextBlob
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_genai import GoogleGenerativeAI
 translator = Translator()
 
 new_txt=""
@@ -45,7 +46,7 @@ original_txt=""
 if file is not None and key:
     # Convert the PDF to images
     #pdf-->bytes-->images
-    llm = ChatGoogleGenerativeAI(model="gemini-pro",google_api_key=f"{key}")
+    llm = GoogleGenerativeAI(model="models/text-bison-001", google_api_key=api_key)
     pop_path = r'poppler-24.02.0/Library/bin'
     images = convert_from_bytes(file.read())
 
