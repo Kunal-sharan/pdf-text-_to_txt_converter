@@ -11,7 +11,11 @@ import streamlit as st
 from englisttohindi.englisttohindi import EngtoHindi
 from googletrans import Translator
 from textblob import TextBlob
+from langchain_google_genai import ChatGoogleGenerativeAI
 translator = Translator()
+
+new_txt=""
+# result = llm.invoke("Write a ballad about LangChain")
 def apply_spell_check(extracted_text):
     try:
         text = TextBlob(extracted_text)
@@ -34,7 +38,10 @@ def create_download_link(text, filename):
     return download_link
 
 file = st.file_uploader("Choose a PDF file", type="pdf")
+key=st.text_input("Enter the key")
+llm = ChatGoogleGenerativeAI(model="gemini-pro",api_key=f"{key}")
 tx=""
+original_txt=""
 if file is not None:
     # Convert the PDF to images
     #pdf-->bytes-->images
@@ -54,6 +61,7 @@ if file is not None:
         txt=pytesseract.image_to_string(img)
         tx+="\n ----- \n"+txt+"\n ----- \n"
         if i>0:
+          original_txt+=txt  
           res=translator.translate(str(txt),dest='hi')
           tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
           # t=apply_spell_check(txt)
@@ -63,7 +71,12 @@ if file is not None:
     if tx:
       b=st.button("Download in txt format")
       if b:
+        result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {original_txt} \n ``` \n in Hindi without changing its meaning")
+        new_txt=result.content
         download_link = create_download_link(tx, "output.txt")
-        st.markdown(download_link, unsafe_allow_html=True)          
+        lnk2= create_download_link(str(new_txt), "output_gemini.txt") 
+        st.markdown(download_link, unsafe_allow_html=True)
+        st.markdown(lnk, unsafe_allow_html=True)  
+          
 
 
