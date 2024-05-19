@@ -40,13 +40,14 @@ def create_download_link(text, filename):
 
 file = st.file_uploader("Choose a PDF file", type="pdf")
 key=st.text_input("Enter the key")
+butt=st.button("Submit")
 st.write("First clear cache before using for faster result")
 butto=st.button("Clear Cache")
 if butto:
     st.cache_data.clear()
 tx=""
 original_txt=""
-butt=st.button("Submit")
+
 if file is not None and key and butt:
     # Convert the PDF to images
     #pdf-->bytes-->images
