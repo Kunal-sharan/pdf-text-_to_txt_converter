@@ -77,7 +77,7 @@ if file is not None and key:
         # download_link = create_download_link(tx, "output.txt")
         lnk2= create_download_link(str(result), "output_gemini.txt") 
         # st.markdown(download_link, unsafe_allow_html=True)
-        st.markdown(lnk, unsafe_allow_html=True)  
+        st.markdown(lnk2, unsafe_allow_html=True)  
           
 
 
