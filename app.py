@@ -46,7 +46,7 @@ original_txt=""
 if file is not None and key:
     # Convert the PDF to images
     #pdf-->bytes-->images
-    llm = GoogleGenerativeAI(model="models/text-bison-001", google_api_key=f"{key}")
+    llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")
     pop_path = r'poppler-24.02.0/Library/bin'
     images = convert_from_bytes(file.read())
 
@@ -74,10 +74,9 @@ if file is not None and key:
       b=st.button("Download in txt format")
       if b:
         result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {original_txt} \n ``` \n in Hindi without changing its meaning")
-        new_txt=result.content
         # download_link = create_download_link(tx, "output.txt")
-        lnk2= create_download_link(new_txt, "output_gemini.txt") 
-        st.markdown(download_link, unsafe_allow_html=True)
+        lnk2= create_download_link(str(result), "output_gemini.txt") 
+        # st.markdown(download_link, unsafe_allow_html=True)
         st.markdown(lnk, unsafe_allow_html=True)  
           
 
