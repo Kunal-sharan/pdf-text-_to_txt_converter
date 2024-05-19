@@ -69,15 +69,16 @@ if file is not None and key and butt:
         img = Image.open(BytesIO(img_bytes))
         txt=pytesseract.image_to_string(img)
         tx+="\n ----- \n"+txt+"\n ----- \n"
-        
-        original_txt+=txt  
+         
           # res=translator.translate(str(txt),dest='hi')
           # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
           # t=apply_spell_check(txt)
           # r=translator.translate(str(t),dest='hi')
           # st.write(len(t))
           # st.write(r)
-    if tx:
+    st.session_state.extracted_txt=tx
+    if "extracted_txt" in st.session_state:
+      tx=st.session_state.extracted_txt  
       b=st.button("Download in txt format")
       if b:
         result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {tx} \n ``` \n in Hindi without changing its meaning")
