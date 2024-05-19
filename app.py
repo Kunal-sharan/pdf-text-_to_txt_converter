@@ -45,6 +45,7 @@ st.write("First clear cache before using for faster result")
 butto=st.button("Clear Cache")
 if butto:
     st.cache_data.clear()
+    st.success("Cleared!")
 tx=""
 original_txt=""
 
