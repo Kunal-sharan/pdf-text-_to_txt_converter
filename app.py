@@ -64,8 +64,8 @@ if file is not None and key:
         tx+="\n ----- \n"+txt+"\n ----- \n"
         if i>0:
           original_txt+=txt  
-          res=translator.translate(str(txt),dest='hi')
-          tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
+          # res=translator.translate(str(txt),dest='hi')
+          # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
           # t=apply_spell_check(txt)
           # r=translator.translate(str(t),dest='hi')
           # st.write(len(t))
@@ -75,8 +75,8 @@ if file is not None and key:
       if b:
         result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {original_txt} \n ``` \n in Hindi without changing its meaning")
         new_txt=result.content
-        download_link = create_download_link(tx, "output.txt")
-        lnk2= create_download_link(str(new_txt), "output_gemini.txt") 
+        # download_link = create_download_link(tx, "output.txt")
+        lnk2= create_download_link(new_txt, "output_gemini.txt") 
         st.markdown(download_link, unsafe_allow_html=True)
         st.markdown(lnk, unsafe_allow_html=True)  
           
