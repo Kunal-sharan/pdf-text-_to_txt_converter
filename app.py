@@ -56,14 +56,15 @@ if file is not None and key:
         img_bytes = BytesIO()
 
 
-        image.save(img_bytes,format='JPEG',quality=50)
+        image.save(img_bytes,format='PNG')
+        #doing format=jpeg and reducing quality will make it a little faster
         img_bytes = img_bytes.getvalue()
         st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
         img = Image.open(BytesIO(img_bytes))
         txt=pytesseract.image_to_string(img)
         tx+="\n ----- \n"+txt+"\n ----- \n"
-        if i>0:
-          original_txt+=txt  
+        
+        original_txt+=txt  
           # res=translator.translate(str(txt),dest='hi')
           # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
           # t=apply_spell_check(txt)
