@@ -39,7 +39,8 @@ def create_download_link(text, filename):
 
 file = st.file_uploader("Choose a PDF file", type="pdf")
 key=st.text_input("Enter the key")
-llm = ChatGoogleGenerativeAI(model="gemini-pro",api_key=f"{key}")
+if key:
+   llm = ChatGoogleGenerativeAI(model="gemini-pro",api_key=f"{key}")
 tx=""
 original_txt=""
 if file is not None:
