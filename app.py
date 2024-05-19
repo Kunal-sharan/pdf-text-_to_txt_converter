@@ -5,6 +5,7 @@ import random
 from PIL import Image
 from pdf2image import convert_from_bytes,convert_from_path
 import io
+import webbrowser
 from io import BytesIO
 import base64
 import streamlit as st
@@ -42,6 +43,7 @@ butto=st.button("Clear Cache")
 if butto:
     st.cache_data.clear()
     st.success("Cleared!")
+    webbrowser.open("https://pdf-text-totxtconverter-xtpnypcj4tbm7f5tcnvtov.streamlit.app/", new=0)
 file = st.file_uploader("Choose a PDF file", type="pdf")
 key=st.text_input("Enter the key")
 butt=st.button("Submit")
