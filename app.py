@@ -46,7 +46,8 @@ if butto:
     st.cache_data.clear()
 tx=""
 original_txt=""
-if file is not None and key:
+butt=st.button("Submit")
+if file is not None and key and butt:
     # Convert the PDF to images
     #pdf-->bytes-->images
     llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")
