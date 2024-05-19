@@ -56,7 +56,7 @@ if file is not None and key:
         img_bytes = BytesIO()
 
 
-        image.save(img_bytes, format='PNG')
+        image.save(img_bytes, format='JPG')
         img_bytes = img_bytes.getvalue()
         st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
         img = Image.open(BytesIO(img_bytes))
