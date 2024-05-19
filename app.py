@@ -5,6 +5,7 @@ import random
 from PIL import Image
 from pdf2image import convert_from_bytes,convert_from_path
 import io
+from io import BytesIO
 import base64
 import streamlit as st
 from englisttohindi.englisttohindi import EngtoHindi
@@ -38,15 +39,15 @@ if file is not None:
     # Convert the PDF to images
     #pdf-->bytes-->images
     pop_path = r'poppler-24.02.0/Library/bin'
-    images = convert_from_path(file.read(),poppler_path=pop_path)
+    images = convert_from_bytes(file.read())
 
     # Display the images
     for i, image in enumerate(images):
         # Convert the PIL image to a format that Streamlit can display
-        img_bytes = io.BytesIO()
+        img_bytes = BytesIO()
 
 
-        image.save(img_bytes, format='JPEG',quality=50)
+        image.save(img_bytes, format='PNG')
         img_bytes = img_bytes.getvalue()
         st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
         img = Image.open(io.BytesIO(img_bytes))
