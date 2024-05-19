@@ -58,7 +58,7 @@ if file is not None and key and butt:
     llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")
     pop_path = r'poppler-24.02.0/Library/bin'
     images = convert_from_bytes(file.read())
-
+    llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}") 
     # Display the images
     for i, image in enumerate(images):
         # Convert the PIL image to a format that Streamlit can display
@@ -71,7 +71,7 @@ if file is not None and key and butt:
         st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
         img = Image.open(BytesIO(img_bytes))
         txt=pytesseract.image_to_string(img)
-        llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")  
+         
         result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
         tx+="\n ----- \n"+result+"\n ----- \n"
          
