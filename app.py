@@ -77,14 +77,14 @@ if file is not None and key and butt:
           # st.write(len(t))
           # st.write(r)
     st.session_state.extracted_txt=tx
-    if "extracted_txt" in st.session_state:
-      tx=st.session_state.extracted_txt  
-      b=st.button("Download in txt format")
-      if b:
-        result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {tx} \n ``` \n in Hindi without changing its meaning")
-        new_txt=result
-        # download_link = create_download_link(tx, "output.txt")
-        lnk2= create_download_link(new_txt, "output_gemini.txt") 
-        
-        st.markdown(lnk2, unsafe_allow_html=True)  
+if "extracted_txt" in st.session_state:
+  tx=st.session_state.extracted_txt  
+  b=st.button("Download in txt format")
+  if b:
+    result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {tx} \n ``` \n in Hindi without changing its meaning")
+    new_txt=result
+    # download_link = create_download_link(tx, "output.txt")
+    lnk2= create_download_link(new_txt, "output_gemini.txt") 
+    
+    st.markdown(lnk2, unsafe_allow_html=True)  
           
