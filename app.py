@@ -37,15 +37,15 @@ def create_download_link(text, filename):
     download_link = f'<a href="data:text/plain;base64,{b64}" download="{filename}">Download text file</a>'
 
     return download_link
-
-file = st.file_uploader("Choose a PDF file", type="pdf")
-key=st.text_input("Enter the key")
-butt=st.button("Submit")
 st.write("First clear cache before using for faster result")
 butto=st.button("Clear Cache")
 if butto:
     st.cache_data.clear()
     st.success("Cleared!")
+file = st.file_uploader("Choose a PDF file", type="pdf")
+key=st.text_input("Enter the key")
+butt=st.button("Submit")
+
 tx=""
 original_txt=""
 
@@ -83,9 +83,8 @@ if "extracted_txt" in st.session_state and key:
   if b:
     llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")  
     result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {tx} \n ``` \n in Hindi without changing its meaning")
-    new_txt=result
     # download_link = create_download_link(tx, "output.txt")
-    lnk2= create_download_link(new_txt, "output_gemini.txt") 
+    lnk2= create_download_link(result, "output_gemini.txt") 
     
     st.markdown(lnk2, unsafe_allow_html=True)  
           
