@@ -77,10 +77,11 @@ if file is not None and key and butt:
           # st.write(len(t))
           # st.write(r)
     st.session_state.extracted_txt=tx
-if "extracted_txt" in st.session_state:
+if "extracted_txt" in st.session_state and key:
   tx=st.session_state.extracted_txt  
   b=st.button("Download in txt format")
   if b:
+    llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")  
     result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {tx} \n ``` \n in Hindi without changing its meaning")
     new_txt=result
     # download_link = create_download_link(tx, "output.txt")
