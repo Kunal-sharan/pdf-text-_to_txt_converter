@@ -46,7 +46,7 @@ original_txt=""
 if file is not None and key:
     # Convert the PDF to images
     #pdf-->bytes-->images
-    llm = GoogleGenerativeAI(model="models/text-bison-001", google_api_key=api_key)
+    llm = GoogleGenerativeAI(model="models/text-bison-001", google_api_key=f"{key}")
     pop_path = r'poppler-24.02.0/Library/bin'
     images = convert_from_bytes(file.read())
 
