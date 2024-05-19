@@ -14,6 +14,7 @@ from googletrans import Translator
 from textblob import TextBlob
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAI
+
 translator = Translator()
 
 new_txt=""
