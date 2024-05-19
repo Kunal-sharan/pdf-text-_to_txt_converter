@@ -42,11 +42,10 @@ key=st.text_input("Enter the key")
 
 tx=""
 original_txt=""
-if file is not None:
+if file is not None and key:
     # Convert the PDF to images
     #pdf-->bytes-->images
-    if key:
-       llm = ChatGoogleGenerativeAI(model="gemini-pro",api_key=f"{key}")
+    llm = ChatGoogleGenerativeAI(model="gemini-pro",google_api_key=f"{key}")
     pop_path = r'poppler-24.02.0/Library/bin'
     images = convert_from_bytes(file.read())
 
