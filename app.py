@@ -53,9 +53,9 @@ if file is not None and key:
             img_bytes = BytesIO()
     
     
-            image.save(img_bytes, format='PNG',quality=70)
+            image.save(img_bytes, format='JPEG',quality=70)
             img_bytes = img_bytes.getvalue()
-            # st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
+            st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
             if i>0:
                 img = Image.open(io.BytesIO(img_bytes))
                 txt=pytesseract.image_to_string(img)
