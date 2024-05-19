@@ -47,36 +47,37 @@ if file is not None and key:
     images = convert_from_bytes(file.read())
 
     # Display the images
-    for i, image in enumerate(images):
-        # Convert the PIL image to a format that Streamlit can display
-        img_bytes = BytesIO()
-
-
-        image.save(img_bytes, format='PNG',quality=70)
-        img_bytes = img_bytes.getvalue()
-        # st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
-        if i>0:
-            img = Image.open(io.BytesIO(img_bytes))
-            txt=pytesseract.image_to_string(img)
-            tx+="\n ----- \n"+txt+"\n ----- \n"
-            st.success(f"Extracted from page {i+1}")
-        # if i>0:
-        #     original_txt+=tx  
-          # res=translator.translate(str(txt),dest='hi')
-          # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
-          # t=apply_spell_check(txt)
-          # r=translator.translate(str(t),dest='hi')
-          # st.write(len(t))
-          # st.write(r)
-    if tx:
-      b=st.button("Download in txt format")
-      if b:
-        result=llm.invoke(f"Translate this text ```\n {tx} \n ``` \n in Hindi without changing its meaning")
-        # download_link = create_download_link(tx, "output.txt")
-        lnk2= create_download_link(str(result), "output_gemini.txt") 
-        # st.markdown(download_link, unsafe_allow_html=True)
-        # st.write(original_txt)  
-        st.markdown(lnk2, unsafe_allow_html=True)  
-          
+    with st.spinner(Processing...):
+        for i, image in enumerate(images):
+            # Convert the PIL image to a format that Streamlit can display
+            img_bytes = BytesIO()
+    
+    
+            image.save(img_bytes, format='PNG',quality=70)
+            img_bytes = img_bytes.getvalue()
+            # st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
+            if i>0:
+                img = Image.open(io.BytesIO(img_bytes))
+                txt=pytesseract.image_to_string(img)
+                tx+="\n ----- \n"+txt+"\n ----- \n"
+                st.success(f"Extracted from page {i+1}")
+            # if i>0:
+            #     original_txt+=tx  
+              # res=translator.translate(str(txt),dest='hi')
+              # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
+              # t=apply_spell_check(txt)
+              # r=translator.translate(str(t),dest='hi')
+              # st.write(len(t))
+              # st.write(r)
+        if tx:
+          b=st.button("Download in txt format")
+          if b:
+            result=llm.invoke(f"Translate this text ```\n {tx} \n ``` \n in Hindi without changing its meaning")
+            # download_link = create_download_link(tx, "output.txt")
+            lnk2= create_download_link(str(result), "output_gemini.txt") 
+            # st.markdown(download_link, unsafe_allow_html=True)
+            # st.write(original_txt)  
+            st.markdown(lnk2, unsafe_allow_html=True)  
+              
 
 
