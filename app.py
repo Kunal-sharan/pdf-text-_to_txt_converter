@@ -82,7 +82,7 @@ if file is not None and key and butt:
     llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}") 
     # Display the images
     i=0
-    for image in convert_pdf_to_images(file.read()):
+    for image in convert_pdf_to_images(file.read(),1,3):
         # Convert the PIL image to a format that Streamlit can display
         img_bytes = BytesIO()
 
