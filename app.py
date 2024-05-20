@@ -81,31 +81,63 @@ if file is not None and key and butt:
     # images = convert_pdf_to_images(file.read())
     llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}") 
     # Display the images
+    option = st.selectbox(
+    "Choose now all pages or custum pages",
+    ("All Pages", "Custom Pages"))
     i=0
-    for image in convert_pdf_to_images(file.read(),1,3):
-        # Convert the PIL image to a format that Streamlit can display
-        img_bytes = BytesIO()
-
-
-        image.save(img_bytes,format='PNG')
-        #doing format=jpeg and reducing quality will make it a little faster
-        img_bytes = img_bytes.getvalue()
-        st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
-        img = Image.open(BytesIO(img_bytes))
-        txt=pytesseract.image_to_string(img)
-         
-        result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
-        if result:
-            stx.scrollableTextbox(result,height = 400)
-        tx+="\n ----- \n"+result+"\n ----- \n"
-         
-          # res=translator.translate(str(txt),dest='hi')
-          # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
-          # t=apply_spell_check(txt)
-          # r=translator.translate(str(t),dest='hi')
-          # st.write(len(t))
-          # st.write(r)
-    st.session_state.extracted_txt=tx
+    if option and option=="All Pages":
+        for image in convert_pdf_to_images(file.read(),1,3):
+            # Convert the PIL image to a format that Streamlit can display
+            img_bytes = BytesIO()
+    
+    
+            image.save(img_bytes,format='PNG')
+            #doing format=jpeg and reducing quality will make it a little faster
+            img_bytes = img_bytes.getvalue()
+            st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
+            img = Image.open(BytesIO(img_bytes))
+            txt=pytesseract.image_to_string(img)
+             
+            result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
+            if result:
+                stx.scrollableTextbox(result,height = 400)
+            tx+="\n ----- \n"+result+"\n ----- \n"
+             
+              # res=translator.translate(str(txt),dest='hi')
+              # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
+              # t=apply_spell_check(txt)
+              # r=translator.translate(str(t),dest='hi')
+              # st.write(len(t))
+              # st.write(r)
+        st.session_state.extracted_txt=tx
+    if option and option=="Custom Pages":
+        start=st.text_input("Enter the starting page")
+        end=st.text_input("Enter the ending page")
+        if start and end:
+            for image in convert_pdf_to_images(file.read(),1,3):
+            # Convert the PIL image to a format that Streamlit can display
+                img_bytes = BytesIO()
+        
+        
+                image.save(img_bytes,format='PNG')
+                #doing format=jpeg and reducing quality will make it a little faster
+                img_bytes = img_bytes.getvalue()
+                st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
+                img = Image.open(BytesIO(img_bytes))
+                txt=pytesseract.image_to_string(img)
+                 
+                result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
+                if result:
+                    stx.scrollableTextbox(result,height = 400)
+                    tx+="\n ----- \n"+result+"\n ----- \n"
+             
+              # res=translator.translate(str(txt),dest='hi')
+              # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
+              # t=apply_spell_check(txt)
+              # r=translator.translate(str(t),dest='hi')
+              # st.write(len(t))
+              # st.write(r)
+            st.session_state.extracted_txt=tx
 if "extracted_txt" in st.session_state and key:
   tx=st.session_state.extracted_txt  
   b=st.button("Download in txt format")
