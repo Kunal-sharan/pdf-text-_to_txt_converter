@@ -43,7 +43,7 @@ def convert_pdf_to_images(pdf_bytes, start_page=0, end_page=None):
     images = []
     for i in range(start_page, end_page):
         # Convert the page to an image
-        page_images = convert_from_bytes(pdf_bytes, first_page=i+1, last_page=i+2)
+        page_images = convert_from_bytes(pdf_bytes, first_page=i+1, last_page=i+1)
         # images.extend(page_images)
         for image in page_images:
             yield image
