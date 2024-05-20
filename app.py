@@ -19,6 +19,8 @@ import PyPDF2
 translator = Translator()
 
 new_txt=""
+start=None
+end=None
 # result = llm.invoke("Write a ballad about LangChain")
 def apply_spell_check(extracted_text):
     try:
