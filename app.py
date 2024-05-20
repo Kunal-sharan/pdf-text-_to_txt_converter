@@ -44,9 +44,11 @@ def convert_pdf_to_images(pdf_bytes, start_page=0, end_page=None):
     for i in range(start_page, end_page):
         # Convert the page to an image
         page_images = convert_from_bytes(pdf_bytes, first_page=i+1, last_page=i+2)
-        images.extend(page_images)
+        # images.extend(page_images)
+        for image in page_images:
+            yield image
 
-    return images
+    # return images
 def create_download_link(text, filename):
     # Convert the text to bytes
     text_bytes = text.encode()
@@ -75,11 +77,12 @@ if file is not None and key and butt:
     # Convert the PDF to images
     #pdf-->bytes-->images
     llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")
-    pop_path = r'poppler-24.02.0/Library/bin'
-    images = convert_pdf_to_images(file.read())
+    # pop_path = r'poppler-24.02.0/Library/bin'
+    # images = convert_pdf_to_images(file.read())
     llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}") 
     # Display the images
-    for i, image in enumerate(images):
+    i=0
+    for image in convert_pdf_to_images(file.read()):
         # Convert the PIL image to a format that Streamlit can display
         img_bytes = BytesIO()
 
