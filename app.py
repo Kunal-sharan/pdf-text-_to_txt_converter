@@ -17,11 +17,12 @@ from langchain_google_genai import GoogleGenerativeAI
 import streamlit_scrollable_textbox as stx
 import PyPDF2
 translator = Translator()
-
+if 'start' not in st.session_state:
+    st.session_state['start'] = 0
+if 'end' not in st.session_state:
+    st.session_state['end'] = 0
 new_txt=""
-start=None
-end=None
-sub=None
+
 # result = llm.invoke("Write a ballad about LangChain")
 def apply_spell_check(extracted_text):
     try:
@@ -114,11 +115,11 @@ if file is not None and key and butt:
               # st.write(r)
         st.session_state.extracted_txt=tx
     if option and option=="Custom Pages":
-        start=st.number_input("Enter the starting page")
-        end=st.number_input("Enter the ending page")
-        sub=st.button("Enter")
-        if start is not None and end is not None and sub is not None:
-            for image in convert_pdf_to_images(file.read(),int(start),int(end)):
+        st.session_state['start'] = st.number_input("Enter the starting page", value=st.session_state['start'])
+        st.session_state['end'] = st.number_input("Enter the ending page", value=st.session_state['end'])
+        sub = st.button("Enter")
+        if sub:
+            for image in convert_pdf_to_images(file.read(),int(st.session_state['start']),int(st.session_state['end'])):
             # Convert the PIL image to a format that Streamlit can display
                 img_bytes = BytesIO()
         
