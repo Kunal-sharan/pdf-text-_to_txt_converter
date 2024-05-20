@@ -17,12 +17,8 @@ from langchain_google_genai import GoogleGenerativeAI
 import streamlit_scrollable_textbox as stx
 import PyPDF2
 translator = Translator()
-if 'start' not in st.session_state:
-    st.session_state['start'] = 0
-if 'end' not in st.session_state:
-    st.session_state['end'] = 0
-new_txt=""
 
+new_txt=""
 # result = llm.invoke("Write a ballad about LangChain")
 def apply_spell_check(extracted_text):
     try:
@@ -47,7 +43,7 @@ def convert_pdf_to_images(pdf_bytes, start_page=0, end_page=None):
     images = []
     for i in range(start_page, end_page):
         # Convert the page to an image
-        page_images = convert_from_bytes(pdf_bytes, first_page=i+1, last_page=i+1)
+        page_images = convert_from_bytes(pdf_bytes, first_page=i+1, last_page=i+2)
         # images.extend(page_images)
         for image in page_images:
             yield image
@@ -83,66 +79,32 @@ if file is not None and key and butt:
     llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")
     # pop_path = r'poppler-24.02.0/Library/bin'
     # images = convert_pdf_to_images(file.read())
-    llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}") 
     # Display the images
-    option = st.selectbox(
-    "Choose your option ",
-    ("Custom Pages","All Pages"))
     i=0
-    if option and option=="All Pages":
-        for image in convert_pdf_to_images(file.read()):
-            # Convert the PIL image to a format that Streamlit can display
-            img_bytes = BytesIO()
-    
-    
-            image.save(img_bytes,format='PNG')
-            #doing format=jpeg and reducing quality will make it a little faster
-            img_bytes = img_bytes.getvalue()
-            st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
-            img = Image.open(BytesIO(img_bytes))
-            txt=pytesseract.image_to_string(img)
-             
-            result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
-            if result:
-                stx.scrollableTextbox(result,height = 400)
-            tx+="\n ----- \n"+result+"\n ----- \n"
-             
-              # res=translator.translate(str(txt),dest='hi')
-              # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
-              # t=apply_spell_check(txt)
-              # r=translator.translate(str(t),dest='hi')
-              # st.write(len(t))
-              # st.write(r)
-        st.session_state.extracted_txt=tx
-    if option and option=="Custom Pages":
-        st.session_state['start'] = st.number_input("Enter the starting page", value=st.session_state['start'])
-        st.session_state['end'] = st.number_input("Enter the ending page", value=st.session_state['end'])
-        sub = st.button("Enter")
-        if sub:
-            for image in convert_pdf_to_images(file.read(),int(st.session_state['start']),int(st.session_state['end'])):
-            # Convert the PIL image to a format that Streamlit can display
-                img_bytes = BytesIO()
-        
-        
-                image.save(img_bytes,format='PNG')
-                #doing format=jpeg and reducing quality will make it a little faster
-                img_bytes = img_bytes.getvalue()
-                st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
-                img = Image.open(BytesIO(img_bytes))
-                txt=pytesseract.image_to_string(img)
-                 
-                result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
-                if result:
-                    stx.scrollableTextbox(result,height = 400)
-                    tx+="\n ----- \n"+result+"\n ----- \n"
-             
-              # res=translator.translate(str(txt),dest='hi')
-              # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
-              # t=apply_spell_check(txt)
-              # r=translator.translate(str(t),dest='hi')
-              # st.write(len(t))
-              # st.write(r)
-            st.session_state.extracted_txt=tx
+    for image in convert_pdf_to_images(file.read()):
+        # Convert the PIL image to a format that Streamlit can display
+        img_bytes = BytesIO()
+
+
+        image.save(img_bytes,format='PNG')
+        #doing format=jpeg and reducing quality will make it a little faster
+        img_bytes = img_bytes.getvalue()
+        st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
+        img = Image.open(BytesIO(img_bytes))
+        txt=pytesseract.image_to_string(img)
+         
+        result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
+        if result:
+            stx.scrollableTextbox(result,height = 400)
+        tx+="\n ----- \n"+result+"\n ----- \n"
+         
+          # res=translator.translate(str(txt),dest='hi')
+          # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
+          # t=apply_spell_check(txt)
+          # r=translator.translate(str(t),dest='hi')
+          # st.write(len(t))
+          # st.write(r)
+    st.session_state.extracted_txt=tx
 if "extracted_txt" in st.session_state and key:
   tx=st.session_state.extracted_txt  
   b=st.button("Download in txt format")
