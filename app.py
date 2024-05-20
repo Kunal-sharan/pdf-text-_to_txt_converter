@@ -83,7 +83,7 @@ if file is not None and key and butt:
     # Display the images
     option = st.selectbox(
     "Choose your option ",
-    ("All Pages", "Custom Pages"))
+    ("Custom Pages","All Pages"))
     i=0
     if option and option=="All Pages":
         for image in convert_pdf_to_images(file.read()):
