@@ -82,11 +82,11 @@ if file is not None and key and butt:
     llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}") 
     # Display the images
     option = st.selectbox(
-    "Choose now all pages or custum pages",
+    "Choose your option ",
     ("All Pages", "Custom Pages"))
     i=0
     if option and option=="All Pages":
-        for image in convert_pdf_to_images(file.read(),1,3):
+        for image in convert_pdf_to_images(file.read()):
             # Convert the PIL image to a format that Streamlit can display
             img_bytes = BytesIO()
     
@@ -114,7 +114,7 @@ if file is not None and key and butt:
         start=st.text_input("Enter the starting page")
         end=st.text_input("Enter the ending page")
         if start and end:
-            for image in convert_pdf_to_images(file.read(),1,3):
+            for image in convert_pdf_to_images(file.read(),int(start),int(end)):
             # Convert the PIL image to a format that Streamlit can display
                 img_bytes = BytesIO()
         
