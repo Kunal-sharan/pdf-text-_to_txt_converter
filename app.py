@@ -14,7 +14,7 @@ from googletrans import Translator
 from textblob import TextBlob
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAI
-
+import streamlit_scrollable_textbox as stx
 translator = Translator()
 
 new_txt=""
@@ -74,7 +74,7 @@ if file is not None and key and butt:
          
         result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
         if result:
-            st.write(str(result))
+            stx.scrollableTextbox(result,height = 400)
         tx+="\n ----- \n"+result+"\n ----- \n"
          
           # res=translator.translate(str(txt),dest='hi')
