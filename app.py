@@ -88,7 +88,7 @@ if file is not None and key and butt:
               # st.write(len(t))
               # st.write(r)
         st.session_state.extracted_txt=tx
-     if option and option=="Custom Pages":
+    if option and option=="Custom Pages":
         start=st.text_input("Enter the starting page")
         end=st.text_input("Enter the ending page")
         if start and end: 
