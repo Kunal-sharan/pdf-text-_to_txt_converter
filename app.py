@@ -33,7 +33,7 @@ def convert_pdf_to_images(pdf_bytes, start_page=0, end_page=None):
     pdf_reader = PyPDF2.PdfReader(io.BytesIO(pdf_bytes))
 
     # Get the number of pages
-    num_pages = pdf_reader.getNumPages()
+    num_pages = len(pdf_reader.pages)
 
     # Set the end_page to the last page if it's not provided
     if end_page is None:
