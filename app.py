@@ -113,7 +113,8 @@ if file is not None and key and butt:
     if option and option=="Custom Pages":
         start=st.text_input("Enter the starting page")
         end=st.text_input("Enter the ending page")
-        if start and end:
+        sub=st.button("Enter")
+        if start and end and sub:
             for image in convert_pdf_to_images(file.read(),int(start),int(end)):
             # Convert the PIL image to a format that Streamlit can display
                 img_bytes = BytesIO()
