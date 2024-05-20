@@ -30,7 +30,7 @@ def apply_spell_check(extracted_text):
         return None
 def convert_pdf_to_images(pdf_bytes, start_page=0, end_page=None):
     # Create a PdfFileReader object
-    pdf_reader = PyPDF2.PdfFileReader(io.BytesIO(pdf_bytes))
+    pdf_reader = PyPDF2.PdfReader(io.BytesIO(pdf_bytes))
 
     # Get the number of pages
     num_pages = pdf_reader.getNumPages()
