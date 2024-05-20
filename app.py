@@ -73,6 +73,7 @@ if file is not None and key and butt:
         txt=pytesseract.image_to_string(img)
          
         result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
+        st.write(result)
         tx+="\n ----- \n"+result+"\n ----- \n"
          
           # res=translator.translate(str(txt),dest='hi')
