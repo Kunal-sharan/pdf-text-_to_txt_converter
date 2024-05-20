@@ -8,3 +8,4 @@ textblob==0.17.1
 poppler-utils
 langchain-google-genai
 streamlit-scrollable-textbox
+PyPDF2
