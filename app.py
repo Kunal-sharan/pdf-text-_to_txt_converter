@@ -117,7 +117,7 @@ if file is not None and key and butt:
         start=st.number_input("Enter the starting page")
         end=st.number_input("Enter the ending page")
         sub=st.button("Enter")
-        if start and end and sub:
+        if start is not None and end is not None and sub is not None:
             for image in convert_pdf_to_images(file.read(),int(start),int(end)):
             # Convert the PIL image to a format that Streamlit can display
                 img_bytes = BytesIO()
