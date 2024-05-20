@@ -74,7 +74,7 @@ if file is not None and key and butt:
          
         result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
         if result:
-            st.markdown(result)
+            st.write(str(result))
         tx+="\n ----- \n"+result+"\n ----- \n"
          
           # res=translator.translate(str(txt),dest='hi')
