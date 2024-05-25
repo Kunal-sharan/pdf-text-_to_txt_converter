@@ -67,7 +67,7 @@ if butto:
     st.success("Cleared!")
     webbrowser.open("https://pdf-text-totxtconverter-xtpnypcj4tbm7f5tcnvtov.streamlit.app/", new=0)
 file = st.file_uploader("Choose a PDF file", type="pdf")
-key=st.text_input("Enter the key")
+key=st.text_input("Enter the key(google generative ai api key)")
 butt=st.button("Submit")
 
 tx=""
