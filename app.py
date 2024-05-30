@@ -60,7 +60,7 @@ def create_download_link(text, filename):
     download_link = f'<a href="data:text/plain;base64,{b64}" download="{filename}">Download text file</a>'
 
     return download_link
-st.set_page_config(layout="wide")   
+# st.set_page_config(layout="wide")   
 st.write("First clear cache before using for faster result")
 butto=st.button("Clear Cache")
 if butto:
