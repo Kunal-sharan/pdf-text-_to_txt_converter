@@ -68,7 +68,7 @@ if butto:
     st.success("Cleared!")
     webbrowser.open("https://pdf-text-totxtconverter-xtpnypcj4tbm7f5tcnvtov.streamlit.app/", new=0)
 file = st.file_uploader("Choose a PDF file", type="pdf")
-Lang=st.text_input("Enter The Language You want translate your texts in your document ")
+Lang=st.text_input("Enter The Language You want to translate your document into ")
 key=st.secrets["GOOGLE_GENAI_API_KEY"]
 butt=st.button("Submit")
 
