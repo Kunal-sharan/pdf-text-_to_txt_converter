@@ -67,13 +67,14 @@ if butto:
     st.success("Cleared!")
     webbrowser.open("https://pdf-text-totxtconverter-xtpnypcj4tbm7f5tcnvtov.streamlit.app/", new=0)
 file = st.file_uploader("Choose a PDF file", type="pdf")
+Lang=st.text_input("Enter The Language You want translate your texts in your document ")
 key=st.text_input("Enter the key(google generative ai api key)")
 butt=st.button("Submit")
 
 tx=""
 original_txt=""
 
-if file is not None and key and butt:
+if file is not None and key and butt and Lang:
     # Convert the PDF to images
     #pdf-->bytes-->images
     llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")
@@ -92,8 +93,7 @@ if file is not None and key and butt:
         st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
         img = Image.open(BytesIO(img_bytes))
         txt=pytesseract.image_to_string(img)
-         
-        result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in Hindi without changing its meaning")
+        result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in {Lang} without changing its meaning")
         if result:
             stx.scrollableTextbox(result,height = 400)
         tx+="\n ----- \n"+result+"\n ----- \n"
