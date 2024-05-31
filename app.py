@@ -102,14 +102,12 @@ if file is not None and key and butt and Lang:
             stx.scrollableTextbox(result,height = 400)
             tts=gTTS(result,lang='hi')
             # Create a BytesIO object
-            byte_io = io.BytesIO()
+            fp = io.BytesIO()
+            tts.save(fp)
+            fp.seek(0)
             
-            # Write the gTTS object to the BytesIO object
-            tts.write_to_fp(byte_io)
-            
-            # Get the byte value
-            byte_value = byte_io.getvalue()
-            st.audio(byte_value,key=f'{i}')
+            # Display an audio player in Streamlit
+            st.audio(fp, format='audio/mp3',key=f'{i}')
         tx+="\n ----- \n"+result+"\n ----- \n"
          
           # res=translator.translate(str(txt),dest='hi')
