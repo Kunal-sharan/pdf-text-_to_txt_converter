@@ -104,8 +104,9 @@ if file is not None and key and butt and Lang:
         result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in {Lang} without changing its meaning")
         if result:
             stx.scrollableTextbox(result,height = 400)
-            result.replace("```"," ")
-            st.audio(text_speech(result),key=f'{i}')
+            b=result.replace("```"," ")
+            st.write(b)
+            st.audio(text_speech(b),key=f'{i}')
         tx+="\n ----- \n"+result+"\n ----- \n"
          
           # res=translator.translate(str(txt),dest='hi')
