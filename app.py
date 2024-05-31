@@ -16,6 +16,8 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAI
 import streamlit_scrollable_textbox as stx
 import PyPDF2
+from gtts import gTTS
+
 translator = Translator()
 
 new_txt=""
@@ -91,12 +93,23 @@ if file is not None and key and butt and Lang:
         image.save(img_bytes,format='PNG')
         #doing format=jpeg and reducing quality will make it a little faster
         img_bytes = img_bytes.getvalue()
-        st.image(img_bytes, caption=f'Page {i+1}', use_column_width=True)
+        i=i+1
+        st.image(img_bytes, caption=f'Page {i}', use_column_width=True)
         img = Image.open(BytesIO(img_bytes))
         txt=pytesseract.image_to_string(img)
         result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in {Lang} without changing its meaning")
         if result:
             stx.scrollableTextbox(result,height = 400)
+            tts=gTTS(result,lang='hi')
+            # Create a BytesIO object
+            byte_io = io.BytesIO()
+            
+            # Write the gTTS object to the BytesIO object
+            tts.write_to_fp(byte_io)
+            
+            # Get the byte value
+            byte_value = byte_io.getvalue()
+            st.audio(byte_value,key=f'{i}')
         tx+="\n ----- \n"+result+"\n ----- \n"
          
           # res=translator.translate(str(txt),dest='hi')
