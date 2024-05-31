@@ -9,4 +9,4 @@ poppler-utils
 langchain-google-genai
 streamlit-scrollable-textbox
 PyPDF2
-gtts
+gTTS
