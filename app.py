@@ -105,7 +105,6 @@ if file is not None and key and butt and Lang:
         if result:
             stx.scrollableTextbox(result,height = 400)
             b=result.replace("```"," ")
-            st.write(str(b))
             st.audio(text_speech(str(b)))
         tx+="\n ----- \n"+result+"\n ----- \n"
          
