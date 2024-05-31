@@ -107,7 +107,7 @@ if file is not None and key and butt and Lang:
             fp.seek(0)
             
             # Display an audio player in Streamlit
-            st.audio(fp, format='audio/mp3',key=f'{i}')
+            st.audio(fp, format='audio/mp3')
         tx+="\n ----- \n"+result+"\n ----- \n"
          
           # res=translator.translate(str(txt),dest='hi')
