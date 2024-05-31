@@ -15,18 +15,15 @@ from langchain_google_genai import GoogleGenerativeAI
 import streamlit_scrollable_textbox as stx
 import PyPDF2
 from gtts import gTTS
-from streamlit_TTS import auto_play, text_to_speech, text_to_audio
+def text_speech(text):
+    tts = gTTS(text=text, lang='hi')
+    speech_bytes = io.BytesIO()
+    tts.write_to_fp(speech_bytes)
+    speech_bytes.seek(0)
 
-from gtts.lang import tts_langs
-
-langs=tts_langs().keys()
-lang=st.selectbox("Choose a language",options=langs)
-text=st.text_input("Choose a text to speak out:")
-speak=st.button("Speak it out!")
-
-if lang and text and speak:
-    #plays the audio directly
-    text_to_speech(text=text, language=lang)
+    # Convert speech to base64 encoding
+    speech_base64 = base64.b64encode(speech_bytes.read()).decode('utf-8')
+    return speech_base64
 new_txt=""
 # result = llm.invoke("Write a ballad about LangChain")
 def apply_spell_check(extracted_text):
@@ -107,14 +104,7 @@ if file is not None and key and butt and Lang:
         result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in {Lang} without changing its meaning")
         if result:
             stx.scrollableTextbox(result,height = 400)
-            tts=gTTS(result,lang='hi')
-            # Create a BytesIO object
-            fp = io.BytesIO()
-            tts.save(fp)
-            fp.seek(0)
-            
-            # Display an audio player in Streamlit
-            st.audio(fp, format='audio/mp3')
+            text_speech(result)
         tx+="\n ----- \n"+result+"\n ----- \n"
          
           # res=translator.translate(str(txt),dest='hi')
