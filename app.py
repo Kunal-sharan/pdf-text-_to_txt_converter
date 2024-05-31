@@ -9,17 +9,24 @@ import webbrowser
 from io import BytesIO
 import base64
 import streamlit as st
-from englisttohindi.englisttohindi import EngtoHindi
-from googletrans import Translator
 from textblob import TextBlob
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_google_genai import GoogleGenerativeAI
 import streamlit_scrollable_textbox as stx
 import PyPDF2
 from gtts import gTTS
+from streamlit_TTS import auto_play, text_to_speech, text_to_audio
 
-translator = Translator()
+from gtts.lang import tts_langs
 
+langs=tts_langs().keys()
+lang=st.selectbox("Choose a language",options=langs)
+text=st.text_input("Choose a text to speak out:")
+speak=st.button("Speak it out!")
+
+if lang and text and speak:
+    #plays the audio directly
+    text_to_speech(text=text, language=lang)
 new_txt=""
 # result = llm.invoke("Write a ballad about LangChain")
 def apply_spell_check(extracted_text):
