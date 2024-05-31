@@ -22,8 +22,8 @@ def text_speech(text):
     speech_bytes.seek(0)
 
     # Convert speech to base64 encoding
-    speech_base64 = base64.b64encode(speech_bytes.read()).decode('utf-8')
-    return speech_base64
+    
+    return speech_bytes.read()
 new_txt=""
 # result = llm.invoke("Write a ballad about LangChain")
 def apply_spell_check(extracted_text):
