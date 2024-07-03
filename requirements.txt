@@ -1,5 +1,4 @@
 englisttohindi==4.1.0
-googletrans==4.0.0rc1
 pdf2image==1.17.0
 Pillow==9.4.0
 pytesseract==0.3.10
