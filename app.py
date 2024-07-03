@@ -107,7 +107,7 @@ if file is not None and key and butt and Lang:
         st.image(img_bytes, caption=f'Page {i}', use_column_width=True)
         img = Image.open(BytesIO(img_bytes))
         txt=pytesseract.image_to_string(img)
-        result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in {Lang} without changing its meaning")
+        result=llm.predict(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in {Lang} without changing its meaning")
         if result:
             stx.scrollableTextbox(result,height = 400)
             b=result.replace("```"," ")
