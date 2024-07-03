@@ -15,6 +15,7 @@ from langchain_google_genai import GoogleGenerativeAI
 import streamlit_scrollable_textbox as stx
 import PyPDF2
 from gtts import gTTS
+from langchain_groq import ChatGroq
 def text_speech(text):
     tts = gTTS(text=text, lang='hi')
     speech_bytes = io.BytesIO()
@@ -75,7 +76,7 @@ if butto:
     webbrowser.open("https://pdf-text-totxtconverter-xtpnypcj4tbm7f5tcnvtov.streamlit.app/", new=0)
 file = st.file_uploader("Choose a PDF file", type="pdf")
 Lang=st.text_input("Enter The Language You want to translate your document into ")
-key=st.secrets["GOOGLE_GENAI_API_KEY"]
+key=st.secrets["GENAI_API_KEY"]
 butt=st.button("Submit")
 
 tx=""
@@ -84,7 +85,12 @@ original_txt=""
 if file is not None and key and butt and Lang:
     # Convert the PDF to images
     #pdf-->bytes-->images
-    llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")
+    # llm = GoogleGenerativeAI(model="gemini-pro", google_api_key=f"{key}")
+    llm = ChatGroq(
+    temperature=0,
+    model="llama3-70b-8192",
+    api_key=key # https://console.groq.com/keys
+)
     # pop_path = r'poppler-24.02.0/Library/bin'
     # images = convert_pdf_to_images(file.read())
     # Display the images
