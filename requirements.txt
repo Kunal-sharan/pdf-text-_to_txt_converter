@@ -11,3 +11,4 @@ streamlit-scrollable-textbox
 PyPDF2
 gTTS
 streamlit-TTS
+langchain-groq
