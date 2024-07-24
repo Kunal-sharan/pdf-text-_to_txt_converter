@@ -10,8 +10,8 @@ from io import BytesIO
 import base64
 import streamlit as st
 from textblob import TextBlob
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_google_genai import GoogleGenerativeAI
+# from langchain_google_genai import ChatGoogleGenerativeAI
+# from langchain_google_genai import GoogleGenerativeAI
 import streamlit_scrollable_textbox as stx
 import PyPDF2
 from gtts import gTTS
