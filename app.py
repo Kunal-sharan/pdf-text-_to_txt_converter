@@ -107,13 +107,13 @@ if file is not None and key and butt and Lang:
         st.image(img_bytes, caption=f'Page {i}', use_column_width=True)
         img = Image.open(BytesIO(img_bytes))
         txt=pytesseract.image_to_string(img)
-        result=llm.predict(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in {Lang} without changing its meaning")
+        result=llm.invoke(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in {Lang} without changing its meaning")
         if result:
             with st.container(border=True,height=400):
-                st.markdown(result)
+                st.markdown(result.content)
             b=result.replace("```"," ")
             st.audio(text_speech(str(b)))
-        tx+="\n ----- \n"+result+"\n ----- \n"
+        tx+="\n ----- \n"+result.content+"\n ----- \n"
          
           # res=translator.translate(str(txt),dest='hi')
           # tx+="\n ----- \n"+str(res.text)+"\n ----- \n"
