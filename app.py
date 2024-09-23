@@ -12,7 +12,7 @@ import streamlit as st
 from textblob import TextBlob
 # from langchain_google_genai import ChatGoogleGenerativeAI
 # from langchain_google_genai import GoogleGenerativeAI
-import streamlit_scrollable_textbox as stx
+# import streamlit_scrollable_textbox as stx
 import PyPDF2
 from gtts import gTTS
 from langchain_groq import ChatGroq
@@ -109,7 +109,8 @@ if file is not None and key and butt and Lang:
         txt=pytesseract.image_to_string(img)
         result=llm.predict(f"Translate this text separated by triple backticks delimiter(```) \n Text: \n ```\n {txt} \n ``` \n in {Lang} without changing its meaning")
         if result:
-            stx.scrollableTextbox(result,height = 400)
+            with st.container(border=True,height=400):
+                st.markdown(result)
             b=result.replace("```"," ")
             st.audio(text_speech(str(b)))
         tx+="\n ----- \n"+result+"\n ----- \n"
