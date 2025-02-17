@@ -1,4 +1,4 @@
-englisttohindi
+
 pdf2image
 Pillow
 pytesseract
